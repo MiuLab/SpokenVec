@@ -201,8 +201,8 @@ class ConfusionDataset(Dataset):
         datas = []
         count, total = 0, 0
         for row in data:
-            ref = row["transcription"]
-            hyp = row["hypothesis"]
+            ref = self._process_text(row["transcription"])
+            hyp = self._process_text(row["hypothesis"])
             score = float(row["score"])
             confs = row["confusion"].split()
             confs = [
@@ -241,11 +241,14 @@ class ConfusionDataset(Dataset):
     def __getitem__(self, index):
         return self.data[index]
 
-    def collate_fn(self, batch):
-        transposed = zip(*batch)
-        return tuple(transposed)
+    def _process_text(self, text):
+        for punct in [',', '.', '?', '!']:
+            if text.endswith(f" {punct}"):
+                text = text[:-2]
+        text = re.sub(" ([a-z])\. ", " \\1 ", text)
+        return text
 
-    def collate_fn_atis(self, batch):
+    def collate_fn(self, batch):
         refs, ref_out_for, ref_out_rev = [], [], []
         hyps, hyp_out_for, hyp_out_rev = [], [], []
         confs, scores = [], []
