@@ -87,6 +87,7 @@ def read_sausage(filename, words):
 def create_confusion(sausages, nbests, scores, stop_words=None):
     data = []
     conf_count = dict()
+    align_errors = 0
     for sausage in sausages:
         uid = sausage["id"]
         saus = sausage["sausage"]
@@ -103,9 +104,15 @@ def create_confusion(sausages, nbests, scores, stop_words=None):
             wtid = wid = 0
             sid = 0
             confs = []
+            align_error = False
             while wtid < len(top_hyp) and wid < len(hyp):
+                if sid >= len(sau_words):
+                    align_error = True
+                    align_errors += 1
+                    break
                 wt_in = top_hyp[wtid] in sau_words[sid]
                 w_in = hyp[wid] in sau_words[sid]
+
                 if wt_in and not w_in:
                     confs.append(f"{top_hyp[wtid]} <eps>")
                     wtid += 1
@@ -117,6 +124,9 @@ def create_confusion(sausages, nbests, scores, stop_words=None):
                     wtid += 1
                     wid += 1
                 sid += 1
+
+            if align_error:
+                continue
 
             for conf in confs:
                 a, b = conf.strip().split()
@@ -143,6 +153,7 @@ def create_confusion(sausages, nbests, scores, stop_words=None):
             break
         print(conf, count)
 
+    print(f"Number of align errors: {align_errors}")
     return data
 
 

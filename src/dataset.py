@@ -205,6 +205,9 @@ class ConfusionDataset(Dataset):
             hyp = self._process_text(row["hypothesis"])
             score = float(row["score"])
             confs = row["confusion"].split()
+            if len(confs) == 0:
+                continue
+
             confs = [
                 (confs[i*3], confs[i*3+1])
                 for i in range(len(confs)//3+1)
