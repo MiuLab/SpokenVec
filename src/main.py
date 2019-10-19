@@ -101,7 +101,7 @@ def cv(args):
     config = load_config(args.model_dir)
     dataset_cls = DATASETS[config.get("dataset_cls", "text")]
     splits = json.load(open(config["splits_file"]))
-    total_acc = 0.0
+    accs = []
     for i, split in enumerate(splits):
         train_dataset = dataset_cls(
             config["train_file"],
@@ -158,9 +158,9 @@ def cv(args):
         )
 
         print_time_info(f"Test accuracy for split {i} is {acc}")
-        total_acc += acc
+        accs.append(acc)
 
-    print_time_info(f"Average cross-validation test accuracy is {total_acc/len(splits)}")
+    print_time_info(f"Average cross-validation test accuracy is {np.mean(accs)}, std {np.std(accs)}")
 
 
 def test(args):
