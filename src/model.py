@@ -81,7 +81,8 @@ class SLU:
             pin_memory=True)
 
     def train(self, epochs, batch_size, data_engine,
-              valid_data_engine=None, test_data_engine=None):
+              valid_data_engine=None, test_data_engine=None,
+              checkpoint=True):
         collate_fn = getattr(data_engine,
                              self.config.get("collate_fn", "collate_fn_asr"))
         self.prepare_training(batch_size, data_engine, collate_fn)
@@ -123,8 +124,9 @@ class SLU:
                 fw.write(f"{idx},{epoch_loss},{epoch_acc},"
                          f"{valid_loss},{valid_acc},{test_loss},{test_acc}\n")
 
-            print_time_info("Epoch {}: save model...".format(idx))
-            self.save_model(self.model_dir, idx)
+            if checkpoint:
+                print_time_info("Epoch {}: save model...".format(idx))
+                self.save_model(self.model_dir, idx)
 
     def test(self, batch_size, data_engine, report=False, verbose=False):
         collate_fn = getattr(
