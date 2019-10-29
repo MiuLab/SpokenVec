@@ -10,7 +10,8 @@ from tqdm import tqdm
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("file", type=str)
+    parser.add_argument("text_data", type=str)
+    parser.add_argument("asr_data", type=str)
     parser.add_argument("output", type=str)
     args = parser.parse_args()
     return args
@@ -19,7 +20,7 @@ def parse_args():
 def read_csv(filename):
     with open(filename) as csvfile:
         reader = csv.DictReader(csvfile)
-        data = [row for row in reader]
+        data = {row["id"]: row for row in reader}
     return data
 
 
@@ -42,11 +43,14 @@ def process_hyp(hyp):
     return hyp
 
 
-def process_confusion(dataset, output, stop_words=None):
+def process_confusion(text_dataset, asr_dataset, output, stop_words=None):
     pairs = []
-    for data in tqdm(dataset):
-        ref = data["ref"]
-        hyp = data["text"]
+    for uid, data in tqdm(text_dataset.items()):
+        ref = data["text"]
+        try:
+            hyp = asr_dataset[uid]["text"]
+        except KeyError:
+            print(f"utterance id {uid} not in asr dataset")
         hyp = process_hyp(hyp)
         pairs.append((ref, (hyp, 1.0)))
 
@@ -80,6 +84,7 @@ def process_confusion(dataset, output, stop_words=None):
                 continue
             if stop_words is not None and a in stop_words or b in stop_words:
                 continue
+            conf = conf.strip()
             if conf not in conf_count:
                 conf_count[conf] = 0
             conf_count[conf] += 1
@@ -113,6 +118,7 @@ def process_confusion(dataset, output, stop_words=None):
 
 if __name__ == "__main__":
     args = parse_args()
-    dataset = read_csv(args.file)
+    text_dataset = read_csv(args.text_data)
+    asr_dataset = read_csv(args.asr_data)
     stop_words = read_stop_words()
-    process_confusion(dataset, args.output, stop_words)
+    process_confusion(text_dataset, asr_dataset, args.output, stop_words)
