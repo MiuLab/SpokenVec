@@ -1,0 +1,28 @@
+{
+    "train_file": "../data/snips_tts/train.csv",
+    "valid_file": "../data/snips_tts_asr/valid.csv",
+    "test_file": "../data/snips_tts_asr/test.csv",
+    "vocab_file": "../data/snips_tts/vocab.txt",
+
+    "n_prev_turns": 0,
+    "batch_size": 64,
+    "train_epochs": 15,
+    "optimizer": "Adam",
+    "learning_rate": 3e-4,
+    "collate_fn": "collate_fn",
+    "collate_fn_test": "collate_fn",
+    "run_batch_fn": "run_batch",
+    "use_elmo": false,
+
+    "model": {
+        "name": "SLURNN",
+        "n_layers": 2,
+        "dim_hidden": 300,
+        "dim_embedding": 300,
+        "dim_elmo_embedding": 0,
+        "dropout_embedding": 0.2,
+        "dropout_hidden": 0.2,
+        "dropout_output": 0.2,
+        "bidirectional": true
+    }
+}

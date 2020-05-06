@@ -1,0 +1,25 @@
+{
+    "train_file": "../data/snips_tts_asr/train.conf.csv",
+    "valid_file": "../data/snips_tts_asr/valid.conf.csv",
+    "test_file": "../data/snips_tts_asr/test.csv",
+    "vocab_file": "../data/snips_tts/vocab.txt",
+    "stop_word_file": "data/stop_words.txt",
+
+    "batch_size": 16,
+    "train_epochs": 10,
+    "train_decoder_epochs": 1,
+    "max_iter_per_epoch": 200,
+    "optimizer": "Adam",
+    "learning_rate": 1e-4,
+    "collate_fn": "collate_fn",
+    "run_batch_fn": "run_batch_ca",
+    "lm_scale": 1.0,
+    "ca_scale": 0.1,
+    "n_negative_sample": 0,
+    
+    "elmo": {
+        "option_file": "https://s3-us-west-2.amazonaws.com/allennlp/models/elmo/2x4096_512_2048cnn_2xhighway/elmo_2x4096_512_2048cnn_2xhighway_options.json",
+        "weight_file": "https://s3-us-west-2.amazonaws.com/allennlp/models/elmo/2x4096_512_2048cnn_2xhighway/elmo_2x4096_512_2048cnn_2xhighway_weights.hdf5"
+    }
+
+}
