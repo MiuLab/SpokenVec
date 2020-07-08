@@ -1,6 +1,7 @@
 Learning ASR-Robust Contextualized Embeddings
 ---
-[Paper](https://ieeexplore.ieee.org/abstract/document/9054689)
+[Paper](https://www.csie.ntu.edu.tw/~yvchen/doc/ICASSP20_SpokenVec.pdf)
+| [Slides](https://www.csie.ntu.edu.tw/~yvchen/doc/ICASSP20_SpokenVec_slide.pdf)
 | [Presentation](https://2020.ieeeicassp-virtual.org/presentation/poster/learning-asr-robust-contextualized-embeddings-spoken-language-understanding/)
 
 Implementation of our ICASSP 2020 paper *Learning ASR-Robust Contextualized Embeddings for Spoken Language Understanding*.
