@@ -1,6 +1,7 @@
 Learning ASR-Robust Contextualized Embeddings
 ---
-[Paper](https://www.csie.ntu.edu.tw/~yvchen/doc/ICASSP20_SpokenVec.pdf)
+[Paper(Main page)](https://ieeexplore.ieee.org/abstract/document/9054689)
+| [Paper(PDF)](https://www.csie.ntu.edu.tw/~yvchen/doc/ICASSP20_SpokenVec.pdf)
 | [Slides](https://www.csie.ntu.edu.tw/~yvchen/doc/ICASSP20_SpokenVec_slide.pdf)
 | [Presentation](https://2020.ieeeicassp-virtual.org/presentation/poster/learning-asr-robust-contextualized-embeddings-spoken-language-understanding/)
 
@@ -50,3 +51,17 @@ python3 main.py ../models/snips_tts/4
 # with lm/snips_tts/3, which uses supervised extraction
 python3 main.py ../models/snips_tts/5
 ```
+
+## Reference
+If you find our work useful, please cite the following paper
+
+        @inproceedings{
+            9054689,
+            author={C. {Huang} and Y. {Chen}},
+            booktitle={ICASSP 2020 - 2020 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)}, 
+            title={Learning Asr-Robust Contextualized Embeddings for Spoken Language Understanding}, 
+            year={2020},
+            volume={},
+            number={},
+            pages={8009-8013},
+        }
